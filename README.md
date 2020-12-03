@@ -9,7 +9,9 @@ __Install instructions__:
 - download example
 - open terminal and execute:
 	- install dependencies `$ npm install` (only once)
-	- run application: `$ node index.js`
+	- update `/config` file by your connection string to PostgreSQL
+	- create new database in PostgreSQL and run `database.sql` script
+	- then run application: `$ node index.js`
 	- open browser `http://127.0.0.1:8000`
 
 ## Total.js Platform
