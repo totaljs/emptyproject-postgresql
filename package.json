@@ -1,0 +1,17 @@
+{
+	"name": "emptyproject-postgresql",
+	"description": "Total.js + PostgreSQL empty project",
+	"version": "1.0.0",
+	"main": "index.js",
+	"dependencies": {
+		"total4": "latest",
+		"dbms": "latest",
+		"pg": "latest"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": ["empty", "project", "postgresql", "total4", "dbms"],
+	"author": "Peter Širka",
+	"license": "MIT"
+}
