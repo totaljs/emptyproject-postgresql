@@ -3,6 +3,9 @@
 - [Total.js Documentation](https://docs.totaljs.com/total4/)
 - [DBMS Documentation](https://docs.totaljs.com/dbms/)
 
+__Install instructions__:
+
+- install [Node.js platform](https://nodejs.org) (only once)
 - download example
 - open terminal and execute:
 	- install dependencies `$ npm install` (only once)
