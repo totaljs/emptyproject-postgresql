@@ -6,7 +6,7 @@ exports.install = function() {
 	ROUTE('GET     /api/products/        *Products --> query');
 	ROUTE('GET     /api/products/{id}/   *Products --> read');
 	ROUTE('POST    /api/products/        *Products --> insert');
-	ROUTE('POST    /api/products/{id}/   *Products --> update');
+	ROUTE('PUT     /api/products/{id}/   *Products --> update');
 	ROUTE('DELETE  /api/products/{id}/   *Products --> remove');
 
 };

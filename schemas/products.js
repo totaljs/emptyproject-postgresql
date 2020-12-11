@@ -6,7 +6,7 @@ NEWSCHEMA('Products', function(schema) {
 	schema.setQuery(function($) {
 
 		// Performs automatically pagination, sort and all checks
-		DBMS().list('tbl_product').autofill($, 'dtcreated:Date,dtupdated:Date', 'id', 'dtcreated_desc', 50);
+		DBMS().list('tbl_product').autofill($, 'dtcreated:Date,dtupdated:Date', 'id', 'dtcreated_desc', 50).callback($.callback);
 
 		// Or you can use a simple query via:
 		// DBMS().find('tbl_product').callback($.callback);
@@ -28,7 +28,7 @@ NEWSCHEMA('Products', function(schema) {
 		model.dtcreated = new Date();
 
 		// Performs query
-		DBMS().insert('tbl_product').audit($, model).callback($.done());
+		DBMS().insert('tbl_product', model).log($, model).callback($.done(model.id));
 
 	});
 
@@ -39,14 +39,14 @@ NEWSCHEMA('Products', function(schema) {
 
 		// Performs query
 		// 404 error will be returned if the no records won't be updated
-		DBMS().modify('tbl_product').id($.id).audit($, model).error(404).callback($.done());
+		DBMS().modify('tbl_product', model).id($.id).log($, model).error(404).callback($.done($.id));
 
 	});
 
 	schema.setRemove(function($) {
 
 		// 404 error will be returned if the no records won't be updated
-		DBMS().remove('tbl_product').id($.id).audit($).error(404).callback($.done());
+		DBMS().remove('tbl_product').id($.id).log($).error(404).callback($.done());
 
 	});
 

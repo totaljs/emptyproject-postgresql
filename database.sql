@@ -46,7 +46,7 @@ INSERT INTO "public"."cl_config" ("id", "type", "value", "name", "dtcreated") VA
 ('totalapi', 'string', '', 'Total.js API services token', NOW()),
 ('mail_smtp', 'string', 'localhost', 'SMTP host', NOW()),
 ('mail_smtp_options', 'json', '{"user":"","password":"","timeout":2000}', 'SMTP options', NOW()),
-('url', 'string', 'https://YOURDOMAIN.com', 'URL address', NOW()));
+('url', 'string', 'https://YOURDOMAIN.com', 'URL address', NOW());
 
 -- INSERT PRODUCTS
 INSERT INTO "public"."tbl_product" ("id", "name", "price") VALUES
