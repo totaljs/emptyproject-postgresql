@@ -1,29 +1,26 @@
 require('dbms').init(CONF.database, ERROR('DBMS'));
 
-// Loads app configuration from database
-FUNC.refresh_config = function(callback) {
-	DBMS().find('cl_config').fields('id,type,value').data(function(response) {
+// Audit logs
+DBMS.audit(function($, data, code) {
 
-		// The method below expects Array Object { id:String, type:String, value: string }
-		// Value is automatically converted to defined type by the framework
-		// More in documentation: Total.js/Globals section
-		LOADCONFIG(response);
+	var model = {};
+	model.schema = $.ID;                      // e.g. Products.insert
 
-		callback && callback();
-	});
-};
+	if ($.user) {
+		model.userid = $.user.id;
+		model.user = $.user.name;
+	}
 
-ON('ready', function() {
+	// model.role = $.user.role;
+	model.code = code;                        // custom code
+	model.ua = $.ua;                          // user-agent obtained from the schema
+	model.ip = $.ip;                          // IP address
+	model.dtcreated = NOW = new Date();
 
-	// Loads configuration after the application is ready to use
-	FUNC.refresh_config();
+	if (data) {
+		data.password = undefined;
+		model.data = JSON.stringify(data);   // Data serialized to JSON
+	}
 
-});
-
-ON('service', function(counter) {
-
-	// Configuration will be reloaded each 20 minutes
-	if (counter % 20 === 0)
-		FUNC.refresh_config();
-
+	this.insert('tbl_log', model).nobind();  // .nobind() means that the result won't be added to response object
 });
