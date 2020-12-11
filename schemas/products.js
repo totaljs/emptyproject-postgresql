@@ -46,7 +46,7 @@ NEWSCHEMA('Products', function(schema) {
 	schema.setRemove(function($) {
 
 		// 404 error will be returned if the no records won't be updated
-		DBMS().remove('tbl_product').id($.id).log($).error(404).callback($.done());
+		DBMS().remove('tbl_product').id($.id).log($).error(404).callback($.done($.id));
 
 	});
 
