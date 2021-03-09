@@ -12,4 +12,3 @@ __Instructions__:
 - update `/config` file by your connection string to PostgreSQL
 - run `$ node index.js`
 - open browser `http://127.0.0.1:8000`
-- drag & drop file `/builds/app.build` to <https://builder.totaljs.com>
