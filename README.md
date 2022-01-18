@@ -6,7 +6,7 @@
 
 __Instructions__:
 
-- install the latest version of the __Total.js framework 4__ from NPM `$ npm install total4`
+- install the latest version of the __Total.js framework 4__ from NPM `$ npm install total4`
 - download example
 - create new database in PostgreSQL and run `database.sql` script
 - update `/config` file by your connection string to PostgreSQL
