@@ -5,11 +5,10 @@
 	"main": "index.js",
 	"dependencies": {
 		"total4": "latest",
-		"dbms": "latest",
-		"pg": "latest"
+		"querybuilderpg": "latest"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node index.js 8000"
 	},
 	"keywords": ["empty", "project", "postgresql", "total4", "dbms"],
 	"author": "Peter Širka",

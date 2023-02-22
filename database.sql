@@ -3,34 +3,21 @@
 -- ==============================
 
 CREATE TABLE "public"."cl_config" (
-	"id" varchar(30) NOT NULL,
-	"type" varchar(10),
+	"id" text NOT NULL,
+	"type" text,
 	"value" text,
-	"name" varchar(50),
+	"name" text,
 	"dtcreated" timestamp DEFAULT now(),
 	"dtupdated" timestamp,
 	PRIMARY KEY ("id")
 );
 
 CREATE TABLE "public"."tbl_product" (
-	"id" varchar(25) NOT NULL,
-	"name" varchar(50),
-	"price" float4 DEFAULT 0,
+	"id" text NOT NULL,
+	"name" vtext,
+	"price" numeric DEFAULT 0,
 	"dtcreated" timestamp DEFAULT now(),
 	"dtupdated" timestamp,
-	PRIMARY KEY ("id")
-);
-
-CREATE TABLE "public"."tbl_log" (
-	"id" serial,
-	"userid" varchar(25),
-	"user" varchar(50),
-	"schema" varchar(50),
-	"code" varchar(10),
-	"ip" cidr,
-	"ua" varchar(50),
-	"data" text,
-	"dtcreated" timestamp DEFAULT now(),
 	PRIMARY KEY ("id")
 );
 

@@ -1,53 +1,71 @@
 NEWSCHEMA('Products', function(schema) {
 
-	schema.define('name', 'String(50)', true);
-	schema.define('price', Number);
-
-	schema.setQuery(function($) {
-
-		// Performs automatically pagination, sort and all checks
-		DBMS().list('tbl_product').autofill($, 'dtcreated:Date,dtupdated:Date', 'id', 'dtcreated_desc', 50).callback($.callback);
-
-		// Or you can use a simple query via:
-		// DBMS().find('tbl_product').callback($.callback);
-
+	schema.action('list', {
+		name: 'List of products',
+		action: function($) {
+			// Performs pagination automatically, sort and all checks
+			DB().list('tbl_product').autoquery($.query, 'id:String, name:String, price:Number, dtcreated:Date, dtupdated:Date', 'dtcreated_desc', 50).callback($);
+			// Or you can use a simple query via:
+			// DB().find('tbl_product').callback($);
+		}
 	});
 
-	schema.setRead(function($) {
+	schema.action('read', {
+		name: 'Read product',
+		params: '*id:String',
+		action: async function($) {
 
-		// Performs query
-		// 404 error will be returned if the no records won't be updated
-		DBMS().read('tbl_product').id($.id).error(404).callback($.callback);
+			var params = $.params;
 
+			// Performs query
+			// An error will be returned if no records cannot be read
+			var item = await DB().read('tbl_product').id(params.id).error('@(Product not found)').promise($);
+
+			$.callback(item);
+		}
 	});
 
-	schema.setInsert(function($, model) {
+	schema.action('create', {
+		name: 'Create product',
+		input: '*name:String, *price:Number',
+		action: async function($, model) {
 
-		// Assigns additional values
-		model.id = UID();
-		model.dtcreated = new Date();
+			// Assigns additional values
+			model.id = UID();
+			model.dtcreated = new Date();
 
-		// Performs query
-		DBMS().insert('tbl_product', model).log($, model).callback($.done(model.id));
-
+			// Performs query
+			DB().insert('tbl_product', model).callback($.done(model.id));
+		}
 	});
 
-	schema.setUpdate(function($, model) {
+	schema.action('update', {
+		name: 'Update product',
+		input: '*name:String, *price:Number',
+		params: '*id:String',
+		action: async function($, model) {
 
-		// Assigns additional values
-		model.dtupdated = new Date();
+			var params = $.params;
 
-		// Performs query
-		// 404 error will be returned if the no records won't be updated
-		DBMS().modify('tbl_product', model).id($.id).log($, model).error(404).callback($.done($.id));
+			// Assigns additional values
+			model.dtupdated = new Date();
 
+			// Performs update
+			// An error will be returned if no records cannot be udpated
+			DB().modify('tbl_product', model).id(params.id).error('@(Product not found)').callback($.done(params.id));
+		}
 	});
 
-	schema.setRemove(function($) {
+	schema.action('remove', {
+		name: 'Remove product',
+		params: '*id:String',
+		action: async function($) {
 
-		// 404 error will be returned if the no records won't be updated
-		DBMS().remove('tbl_product').id($.id).log($).error(404).callback($.done($.id));
+			var params = $.params;
 
+			// An error will be returned if no records cannot be removed
+			DB().remove('tbl_product').id(params.id).error('@(Product not found)').callback($.done(params.id));
+		}
 	});
 
 });
