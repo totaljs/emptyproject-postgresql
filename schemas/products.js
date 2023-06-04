@@ -4,7 +4,7 @@ NEWSCHEMA('Products', function(schema) {
 		name: 'List of products',
 		action: function($) {
 			// Performs pagination automatically, sort and all checks
-			DB().list('tbl_product').autoquery($.query, 'id:String, name:String, price:Number, dtcreated:Date, dtupdated:Date', 'dtcreated_desc', 50).callback($);
+			DATA.list('tbl_product').autoquery($.query, 'id:String, name:String, price:Number, dtcreated:Date, dtupdated:Date', 'dtcreated_desc', 50).callback($);
 			// Or you can use a simple query via:
 			// DB().find('tbl_product').callback($);
 		}
@@ -19,7 +19,7 @@ NEWSCHEMA('Products', function(schema) {
 
 			// Performs query
 			// An error will be returned if no records cannot be read
-			var item = await DB().read('tbl_product').id(params.id).error('@(Product not found)').promise($);
+			var item = await DATA.read('tbl_product').id(params.id).error('@(Product not found)').promise($);
 
 			$.callback(item);
 		}
@@ -28,14 +28,14 @@ NEWSCHEMA('Products', function(schema) {
 	schema.action('create', {
 		name: 'Create product',
 		input: '*name:String, *price:Number',
-		action: async function($, model) {
+		action: function($, model) {
 
 			// Assigns additional values
 			model.id = UID();
 			model.dtcreated = new Date();
 
 			// Performs query
-			DB().insert('tbl_product', model).callback($.done(model.id));
+			DATA.insert('tbl_product', model).callback($.done(model.id));
 		}
 	});
 
@@ -43,7 +43,7 @@ NEWSCHEMA('Products', function(schema) {
 		name: 'Update product',
 		input: '*name:String, *price:Number',
 		params: '*id:String',
-		action: async function($, model) {
+		action: function($, model) {
 
 			var params = $.params;
 
@@ -52,7 +52,7 @@ NEWSCHEMA('Products', function(schema) {
 
 			// Performs update
 			// An error will be returned if no records cannot be udpated
-			DB().modify('tbl_product', model).id(params.id).error('@(Product not found)').callback($.done(params.id));
+			DATA.modify('tbl_product', model).id(params.id).error('@(Product not found)').callback($.done(params.id));
 		}
 	});
 
@@ -64,7 +64,7 @@ NEWSCHEMA('Products', function(schema) {
 			var params = $.params;
 
 			// An error will be returned if no records cannot be removed
-			DB().remove('tbl_product').id(params.id).error('@(Product not found)').callback($.done(params.id));
+			DATA.remove('tbl_product').id(params.id).error('@(Product not found)').callback($.done(params.id));
 		}
 	});
 
